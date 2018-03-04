@@ -36,3 +36,34 @@ html, body {
     padding: 50px;
     text-align: center;
 }
+
+.react-calendar__month-view__days{
+    background: grey;
+}
+
+.react-calendar__tile{
+    background: green;
+    pointer-events: none;
+}
+
+.react-calendar__tile:disabled{
+    color: grey !important;
+    background: grey !important;
+}
+
+.react-calendar__navigation__arrow {
+    display: none;
+}
+
+.calendar{
+    padding: 20px;
+}
+
+.react-calendar__navigation__label {
+    pointer-events: none;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: black;
+    background: yellow;
+}

@@ -44,19 +44,17 @@ class App extends Component {
         if(!this.internals.countryCodes.includes(countryCode)){
             this.setState({showCalendars: false, showError: true, error: 'Please select a valid country code!'});
             return;
-        }else if(this.state.daysCount == 0) {
+        }else if(this.state.daysCount === 0) {
             this.setState({showCalendars: false, showError: true, error: 'Zero number of days!'});
             return;
-        }else if(this.state.showError == true) {
+        }else if(this.state.showError === true) {
             this.setState({showError: false});
         }
         this.renderCalendars(moment(startDate), daysCount, countryCode);
     }
 
     renderCalendars(startDate, daysCount, countryCode){
-        console.log(moment(startDate));
-        console.log(daysCount);
-        console.log(countryCode);
+        this.setState({showCalendars: true});
     }
 
     render() {
@@ -111,7 +109,19 @@ class App extends Component {
                 }
                 {
                     this.state.showCalendars &&
-                    this.state.calendarsJSX
+                    <div className="col-xs-12 row">
+                        <div className="calendar-container row center-xs">
+                            <Calendar
+                                className="col-xs-2 calendar"
+                                showNavigation={true}
+                                showNeighboringMonth={false}
+                                calendarType="US"
+                                activeStartDate={this.state.startDate.toDate()}
+                                minDate={this.state.startDate.toDate()}
+                                maxDate={moment(this.state.startDate).add(parseInt(this.state.daysCount-1), 'days').toDate()}
+                            />
+                        </div>
+                    </div>
                 }
             </div>
         );
