@@ -12,8 +12,7 @@ html, body {
     padding: 10px;
 }
 
-.container {
-    max-width: 500px;
+.container, .calendar-container {
     text-align: center;
     padding: 30px;
     margin: 50px auto 0px;
@@ -21,4 +20,19 @@ html, body {
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 0px 0px 5px black;
+}
+
+.container{
+    max-width: 500px;
+}
+
+.calendar-container {
+    max-width: 1000px;
+}
+
+.error {
+    color: crimson;
+    font-size: 36px;
+    padding: 50px;
+    text-align: center;
 }
