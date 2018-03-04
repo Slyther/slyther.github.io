@@ -44,7 +44,7 @@ class App extends Component {
         if(!this.internals.countryCodes.includes(countryCode)){
             this.setState({showCalendars: false, showError: true, error: 'Please select a valid country code!'});
             return;
-        }else if(this.state.daysCount === 0) {
+        }else if(this.state.daysCount == 0) {
             this.setState({showCalendars: false, showError: true, error: 'Zero number of days!'});
             return;
         }else if(this.state.showError === true) {
@@ -54,7 +54,35 @@ class App extends Component {
     }
 
     renderCalendars(startDate, daysCount, countryCode){
-        this.setState({showCalendars: true});
+        daysCount = daysCount-1;
+        let calendars = [];
+        do{
+            let nextMonth = moment(startDate).toDate();
+            nextMonth.setDate(1);
+            nextMonth.setMonth(parseInt(startDate.format('M')));
+            let diff = startDate.diff(moment(nextMonth), 'days');
+            calendars.push(
+                <Calendar
+                    className="col-xs-2 calendar"
+                    key={startDate.toDate() + diff + daysCount}
+                    showNavigation={true}
+                    showNeighboringMonth={false}
+                    calendarType="US"
+                    activeStartDate={startDate.toDate()}
+                    minDate={startDate.toDate()}
+                    maxDate={moment(startDate).add(daysCount, 'days').toDate()}
+                />
+            );
+            daysCount = parseInt(daysCount) + parseInt(diff);
+            startDate = startDate.subtract(diff, 'days');
+        }while(daysCount >= 0);
+        this.setState({calendarsJSX: (
+            <div className="col-xs-12 row">
+                <div className="calendar-container row center-xs">
+                    {calendars}
+                </div>
+            </div>
+        ), showCalendars: true});
     }
 
     render() {
@@ -109,19 +137,7 @@ class App extends Component {
                 }
                 {
                     this.state.showCalendars &&
-                    <div className="col-xs-12 row">
-                        <div className="calendar-container row center-xs">
-                            <Calendar
-                                className="col-xs-2 calendar"
-                                showNavigation={true}
-                                showNeighboringMonth={false}
-                                calendarType="US"
-                                activeStartDate={this.state.startDate.toDate()}
-                                minDate={this.state.startDate.toDate()}
-                                maxDate={moment(this.state.startDate).add(parseInt(this.state.daysCount-1), 'days').toDate()}
-                            />
-                        </div>
-                    </div>
+                    this.state.calendarsJSX
                 }
             </div>
         );
